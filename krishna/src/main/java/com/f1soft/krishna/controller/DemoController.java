@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
     @GetMapping("/demo")
     public ResponseEntity<String> demo() {
-        return ResponseEntity.ok("This is secure Url");
+        return ResponseEntity.ok("this is secure url which can access after login only");
     }
     @GetMapping("/admin_only")
     public ResponseEntity<String> adminOnly() {

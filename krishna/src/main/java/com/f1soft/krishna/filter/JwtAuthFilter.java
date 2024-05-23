@@ -1,7 +1,7 @@
 package com.f1soft.krishna.filter;
 
 import com.f1soft.krishna.service.JwtService;
-import com.f1soft.krishna.service.UserInfoService;
+import com.f1soft.krishna.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ import java.io.IOException;
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
-    private final UserInfoService userInfoService;
+    private final UserService userService;
 
     @Override
     protected void doFilterInternal(
@@ -40,7 +40,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = userInfoService.loadUserByUsername(username);
+            UserDetails userDetails = userService.loadUserByUsername(username);
 
 
             if(jwtService.isValid(token, userDetails)) {
