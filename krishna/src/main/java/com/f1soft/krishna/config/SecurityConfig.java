@@ -31,8 +31,8 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers("/admin_only/**").hasAnyAuthority("ADMIN")
                         .anyRequest()
-                        .authenticated()
-                ).userDetailsService(userService)
+                        .authenticated())
+                .userDetailsService(userService)
                 .sessionManagement(session->session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
@@ -41,6 +41,7 @@ public class SecurityConfig {
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 

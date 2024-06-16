@@ -1,6 +1,10 @@
 package com.f1soft.krishna.service;
 
 import com.f1soft.krishna.entity.User;
+import com.nimbusds.jose.jwk.Curve;
+import com.nimbusds.jose.jwk.ECKey;
+import com.nimbusds.jose.jwk.KeyUse;
+import com.nimbusds.jose.jwk.gen.ECKeyGenerator;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -10,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.UUID;
 import java.util.function.Function;
 @Service
 public class JwtService {
@@ -43,6 +48,7 @@ public class JwtService {
                 .getPayload();
     }
     public String generateToken(User user){
+
         String token = Jwts.builder()
                 .subject(user.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
@@ -52,8 +58,41 @@ public class JwtService {
         return  token;
     }
 
-    private SecretKey getSigninKey() {
+    public SecretKey getSigninKey() {
         byte[] keyBytes = Decoders.BASE64URL.decode(SECRET_KEY);
+
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+//    frome here I am tried to implement jose
+//    JWTClaimsSet claims = new JWTClaimsSet.Builder()
+//            .claim("email", "sanjay@example.com")
+//            .claim("name", "Sanjay Patel")
+//            .build();
+//
+//    Payload payload = new Payload(claims.toJSONObject());
+//
+//
+//    JWEHeader header = new JWEHeader(JWEAlgorithm.DIR, EncryptionMethod.A128CBC_HS256);
+//
+//    String secret = “841D8A6C80CBA4FCAD32D5367C18C53B”;
+//    byte[] secretKey = secret.getBytes();
+//     encrypter = new DirectEncrypter(secretKey);
+//
+//    JWEObject jweObject = new JWEObject(header, payload);
+//jweObject.encrypt(encrypter);
+//    String token = jweObject.serialize();
+
+//    public static ECKey generateSecret() {
+//        com.nimbusds.jose.jwk.ECKey ecKey = null;
+//        try {
+//            ecKey = new ECKeyGenerator(Curve.P_256K)
+//                    .keyUse(KeyUse.SIGNATURE) // indicate the intended use of the key
+//                    .keyID(UUID.randomUUID().toString()) // give the key a unique ID
+//                    .generate(); // generate the EC key
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return ecKey;
+//    }
 }
