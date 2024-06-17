@@ -1,10 +1,6 @@
 package com.f1soft.krishna.service;
 
-import com.f1soft.krishna.entity.User;
-import com.nimbusds.jose.jwk.Curve;
-import com.nimbusds.jose.jwk.ECKey;
-import com.nimbusds.jose.jwk.KeyUse;
-import com.nimbusds.jose.jwk.gen.ECKeyGenerator;
+import com.f1soft.krishna.entity.AppUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -14,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
-import java.util.UUID;
 import java.util.function.Function;
 @Service
 public class JwtService {
@@ -47,10 +42,10 @@ public class JwtService {
                 .parseSignedClaims(token)
                 .getPayload();
     }
-    public String generateToken(User user){
+    public String generateToken(AppUser appUser){
 
         String token = Jwts.builder()
-                .subject(user.getUsername())
+                .subject(appUser.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis()+1000*60*2))//for two minute
                 .signWith(getSigninKey())
