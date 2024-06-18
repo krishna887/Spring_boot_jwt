@@ -12,6 +12,6 @@ import java.util.List;
 @Data
 public class AuthenticationResponse {
     private  String token;
-private String userName;
-private List<? extends GrantedAuthority> roles;
+    private String userName;
+    private List<? extends GrantedAuthority> roles;
 }

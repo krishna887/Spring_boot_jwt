@@ -1,7 +1,18 @@
 package com.f1soft.krishna.entity;
 
-public enum Roles {
-    ADMIN,
-    USER,
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "roles")
+public class Roles {
+    @jakarta.persistence.Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long Id;
+    private String role;
 }

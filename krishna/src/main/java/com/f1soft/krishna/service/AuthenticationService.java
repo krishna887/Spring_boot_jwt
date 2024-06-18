@@ -21,11 +21,9 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     public String register(AppUser request) {
        AppUser appUser = AppUser.builder()
-        .userName(request.getUsername())
-        .email(request.getEmail())
-        .role(request.getRole())
-        .email(request.getEmail())
-        .password(passwordEncoder.encode(request.getPassword()))
+               .username(request.getUsername())
+               .roles(request.getRoles())
+               .password(passwordEncoder.encode(request.getPassword()))
         .build();
        repository.save(appUser);
        return jwtService.generateToken(appUser);
@@ -38,7 +36,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        AppUser appUser =repository.findByUserName(request.getUsername()).orElseThrow();
+        AppUser appUser =repository.findByUsername(request.getUsername()).orElseThrow();
         String token= jwtService.generateToken(appUser);
 
         return new AuthenticationResponse(token, appUser.getUsername(), (List<? extends GrantedAuthority>) appUser.getAuthorities());
